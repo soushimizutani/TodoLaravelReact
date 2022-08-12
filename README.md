@@ -121,3 +121,39 @@ $ php artisan serve
     http://localhost:8000/api/tasks
     で表示されればOK
 ```
+
+
+# テストコードを書いて、APIを検証
+```
+.envをコピーして下記を作成
+.env.testing
+    DB_CONNECTION=sqlite
+    DB_DATABASE=test.sqlite
+
+config/database.php
+    'url' => env('DATABASE_URL'),
+    'database' => database_path(env('DB_DATABASE', 'database.sqlite')), //envにDB_DATABASEがなければdatabase.sqliteを読み込む
+    'prefix' => '',
+
+$ touch database/test.sqlite
+```
+
+テストコードを記載
+```
+tests/Feature/TaskTest.php
+    class TaskTest extends TestCase
+    {
+        /**
+        * @test
+        */
+        public function 一覧を取得()
+        {
+            $response = $this->get('/');
+            $response->assertOK();
+        }
+    }
+```
+テストを実行
+```
+$ ./vendor/bin/phpunit tests/Feature/TaskTest.php
+```
