@@ -33,6 +33,7 @@ $ touch database/database.sqlite
 $ composer require --dev barryvdh/laravel-ide-helper   
 ```
 
+
 # データベース作成
 マイグレーションを行い、Taskというテーブルを作成
 ```
@@ -85,4 +86,38 @@ database/seeders/DatabaseSeeder.php
     }
 
 $ php artisan db:seed
+```
+
+
+# コントローラーを使って登録したデータを取得するAPIを作成
+```
+app/Http/Controllers/TaskController.php
+    /**
+     * タスク一覧
+     *
+     * @return Task[]\Illuminate\Database\Eloquent\Collection
+     */
+    public function index()
+    {
+        return Task::orderByDesc('id')->get();
+        //return Task::all();
+    }
+
+routes/api.php //今回はAPIなのでこっち
+    Route::apiResource('tasks', 'TaskController');
+
+app/Providers/RouteServiceProviders.php //自動的にコントラーズディレクトリに入れたファイルを読み込ませるhttps://biz.addisteria.com/laravel_route_error/
+    public const HOME = '/home';
+    protected $namespace = 'App\\Http\\Controllers';
+
+    Route::middleware('api')
+        ->prefix('api')
+        ->namespace($this->namespace)
+        ->group(base_path('routes/api.php'));
+
+$ php artisan route:list
+
+$ php artisan serve
+    http://localhost:8000/api/tasks
+    で表示されればOK
 ```
