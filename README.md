@@ -141,16 +141,110 @@ $ touch database/test.sqlite
 テストコードを記載
 ```
 tests/Feature/TaskTest.php
+    use Illuminate\Foundation\Testing\RefreshDatabase;
+    use Tests\TestCase;
+    use App\Models\Task;
     class TaskTest extends TestCase
     {
+        use RefreshDatabase;
         /**
         * @test
         */
         public function 一覧を取得()
         {
-            $response = $this->get('/');
-            $response->assertOK();
+            $tasks = Task::factory()->count(10)->create();
+            $response = $this->getJson('api/tasks');
+            $response
+                ->assertOk()
+                ->assertJsonCount($tasks->count());
         }
+    }
+```
+テストを実行
+```
+$ ./vendor/bin/phpunit tests/Feature/TaskTest.php
+```
+
+# API作成
+```
+app/Http/Controllers/TaskController.php
+    public function store(StoreTaskRequest $request)
+    {
+        $task = Task::create($request->all());
+        return $task
+            ? response()->json($task, 201)
+            : response()->json([], 500);
+    }
+    public function update(UpdateTaskRequest $request, Task $task)
+    {
+        $task->title = $request->title;
+
+        return $task->update()
+            ? response()->json($task)
+            : response()->json([], 500);
+    }
+    public function destroy(Task $task)
+    {
+        return $task->delete()
+            ? response()->json($task)
+            : response()->json([], 500);
+    }
+
+app/Models/Task.php
+    class Task extends Model
+    {
+        use HasFactory;
+        protected $fillable = [
+            'title', 'is_done'
+        ];
+        protected $casts = [
+            'is_done' => 'bool'
+        ];
+    }
+
+app/Http/Requests/StoreTaskRequest.php
+app/Http/Requests/UpdateTaskRequest.php
+    public function authorize()
+    {
+        return true;
+    }
+
+tests/Feature/TaskTest.php
+    /**
+     * @test
+     */
+    public function 登録ができる()
+    {
+        $data = [
+            'title' => 'テスト投稿'
+        ];
+        $response = $this->postJson('api/tasks', $data);
+        $response
+            ->assertStatus(201)
+            ->assertJsonFragment($data);
+    }
+    /**
+     * @test
+     */
+    public function 更新ができる()
+    {
+        $task = Task::factory()->create();
+        $task->title = '書き換え';
+        $response = $this->patchJson("api/tasks/{$task->id}", $task->toArray());
+        $response
+            ->assertOk()
+            ->assertJsonFragment($task->toArray());
+    }
+    /**
+     * @test
+     */
+    public function 削除ができる()
+    {
+        $task = Task::factory()->count(10)->create();
+        $response = $this->deleteJson("api/tasks/1");
+        $response->assertOk();
+        $response = $this->getJson("api/tasks");
+        $response->assertJsonCount($task->count() -1);
     }
 ```
 テストを実行
