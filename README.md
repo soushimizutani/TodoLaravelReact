@@ -251,3 +251,31 @@ tests/Feature/TaskTest.php
 ```
 $ ./vendor/bin/phpunit tests/Feature/TaskTest.php
 ```
+
+
+# バリデーション
+```
+$ php artisan make:request TaskRequest
+
+app/Http/Requests/TaskRequest.php
+    public function authorize()
+    {
+        return true;
+    }
+    public function rules()
+    {
+        return [
+            'title' => 'required'
+        ];
+    }
+
+app/Http/Controllers/TaskController.php
+    use App\Http\Requests\TaskRequest;
+    use App\Models\Task;
+
+    各RequestをTaskRequestに書き換え
+```
+テストを実行
+```
+$ ./vendor/bin/phpunit tests/Feature/TaskTest.php
+```
