@@ -279,3 +279,14 @@ app/Http/Controllers/TaskController.php
 ```
 $ ./vendor/bin/phpunit tests/Feature/TaskTest.php
 ```
+
+
+
+
+
+
+
+
+
+
+# LaravelにReactを追加
