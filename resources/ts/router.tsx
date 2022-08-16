@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
     BrowserRouter,
     Routes,
@@ -8,10 +8,21 @@ import {
 import TaskPage from "./pages/tasks";
 import LoginPage from "./pages/login";
 import HelpPage from "./pages/help";
+import axios from "axios";
 
 
 
 const Router = () => {
+
+    useEffect(() => {
+        axios.post('/api/login', {
+            email: 'yamada@example.com',
+            password: '123456789'
+        }).then(response => {
+            console.log(response);
+        });
+    }, []);
+
     return (
         <BrowserRouter>
             <div>
