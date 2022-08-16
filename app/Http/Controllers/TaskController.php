@@ -17,7 +17,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return Task::orderByDesc('id')->get();
+        return Task::where('user_id', \Auth::id())->orderByDesc('id')->get();
     }
 
     /**
@@ -38,6 +38,10 @@ class TaskController extends Controller
      */
     public function store(TaskRequest $request)
     {
+        $request->merge([
+            'user_id' => \Auth::id()
+        ]);
+        
         $task = Task::create($request->all());
 
         return $task
