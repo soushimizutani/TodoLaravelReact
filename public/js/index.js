@@ -2569,7 +2569,7 @@ var __importDefault = this && this.__importDefault || function (mod) {
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports.updateDoneTask = exports.getTasks = void 0;
+exports.deleteTask = exports.updateTask = exports.createTask = exports.updateDoneTask = exports.getTasks = void 0;
 
 var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 
@@ -2630,6 +2630,91 @@ var updateDoneTask = function updateDoneTask(_ref) {
 };
 
 exports.updateDoneTask = updateDoneTask;
+
+var createTask = function createTask(title) {
+  return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+    var _yield$axios_1$defaul3, data;
+
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            _context3.next = 2;
+            return axios_1["default"].post("api/tasks", {
+              title: title
+            });
+
+          case 2:
+            _yield$axios_1$defaul3 = _context3.sent;
+            data = _yield$axios_1$defaul3.data;
+            return _context3.abrupt("return", data);
+
+          case 5:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3);
+  }));
+};
+
+exports.createTask = createTask;
+
+var updateTask = function updateTask(_ref2) {
+  var id = _ref2.id,
+      task = _ref2.task;
+  return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+    var _yield$axios_1$defaul4, data;
+
+    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            _context4.next = 2;
+            return axios_1["default"].put("api/tasks/".concat(id), task);
+
+          case 2:
+            _yield$axios_1$defaul4 = _context4.sent;
+            data = _yield$axios_1$defaul4.data;
+            return _context4.abrupt("return", data);
+
+          case 5:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4);
+  }));
+};
+
+exports.updateTask = updateTask;
+
+var deleteTask = function deleteTask(id) {
+  return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+    var _yield$axios_1$defaul5, data;
+
+    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            _context5.next = 2;
+            return axios_1["default"]["delete"]("api/tasks/".concat(id));
+
+          case 2:
+            _yield$axios_1$defaul5 = _context5.sent;
+            data = _yield$axios_1$defaul5.data;
+            return _context5.abrupt("return", data);
+
+          case 5:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, _callee5);
+  }));
+};
+
+exports.deleteTask = deleteTask;
 
 /***/ }),
 
@@ -2752,28 +2837,93 @@ exports["default"] = LoginPage;
 "use strict";
 
 
-var __importDefault = this && this.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  var desc = Object.getOwnPropertyDescriptor(m, k);
+
+  if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+    desc = {
+      enumerable: true,
+      get: function get() {
+        return m[k];
+      }
+    };
+  }
+
+  Object.defineProperty(o, k2, desc);
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
 };
 
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var taskQuery_1 = __webpack_require__(/*! ../../../queries/taskQuery */ "./resources/ts/queries/taskQuery.ts");
 
 var TaskInput = function TaskInput() {
+  var _ref = (0, react_1.useState)(''),
+      _ref2 = _slicedToArray(_ref, 2),
+      title = _ref2[0],
+      setTitle = _ref2[1];
+
+  var createTask = (0, taskQuery_1.useCreateTask)();
+
+  var handleSubmit = function handleSubmit(e) {
+    e.preventDefault();
+    createTask.mutate(title);
+    setTitle('');
+  };
+
   return react_1["default"].createElement("form", {
-    className: "input-form"
+    className: "input-form",
+    onSubmit: handleSubmit
   }, react_1["default"].createElement("div", {
     className: "inner"
   }, react_1["default"].createElement("input", {
     type: "text",
     className: "input",
     placeholder: "TODO\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
-    defaultValue: ""
+    value: title,
+    onChange: function onChange(e) {
+      return setTitle(e.target.value);
+    }
   }), react_1["default"].createElement("button", {
     className: "btn is-primary"
   }, "\u8FFD\u52A0")));
@@ -2792,23 +2942,136 @@ exports["default"] = TaskInput;
 "use strict";
 
 
-var __importDefault = this && this.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  var desc = Object.getOwnPropertyDescriptor(m, k);
+
+  if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+    desc = {
+      enumerable: true,
+      get: function get() {
+        return m[k];
+      }
+    };
+  }
+
+  Object.defineProperty(o, k2, desc);
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
 };
 
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
 var taskQuery_1 = __webpack_require__(/*! ../../../queries/taskQuery */ "./resources/ts/queries/taskQuery.ts");
+
+var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.js");
 
 var TaskItem = function TaskItem(_ref) {
   var task = _ref.task;
   var updateDoneTask = (0, taskQuery_1.useUpdateDoneTask)();
+  var updateTask = (0, taskQuery_1.useUpdateTask)();
+  var deleteTask = (0, taskQuery_1.useDeleteTask)();
+
+  var _ref2 = (0, react_1.useState)(undefined),
+      _ref3 = _slicedToArray(_ref2, 2),
+      editTitle = _ref3[0],
+      setEditTitle = _ref3[1];
+
+  var handleInputChange = function handleInputChange(e) {
+    setEditTitle(e.target.value);
+  };
+
+  var handleUpdate = function handleUpdate(e) {
+    e.preventDefault();
+
+    if (!editTitle) {
+      react_toastify_1.toast.error('タイトルを入力してください');
+      return;
+    }
+
+    var newTask = Object.assign({}, task);
+    newTask.title = editTitle;
+    updateTask.mutate({
+      id: task.id,
+      task: newTask
+    });
+    setEditTitle(undefined);
+  };
+
+  var handleToggleEdit = function handleToggleEdit() {
+    setEditTitle(task.title);
+  };
+
+  var handleOnkey = function handleOnkey(e) {
+    if (['Escape', 'Tab'].includes(e.key)) {
+      setEditTitle(undefined);
+    }
+  };
+
+  var itemInput = function itemInput() {
+    return react_1["default"].createElement(react_1["default"].Fragment, null, react_1["default"].createElement("form", {
+      onSubmit: handleUpdate
+    }, react_1["default"].createElement("input", {
+      type: "text",
+      className: "input",
+      defaultValue: editTitle,
+      onChange: handleInputChange,
+      onKeyDown: handleOnkey
+    }), react_1["default"].createElement("button", {
+      className: "btn",
+      onClick: handleUpdate
+    }, "\u66F4\u65B0")));
+  };
+
+  var itemText = function itemText() {
+    return react_1["default"].createElement(react_1["default"].Fragment, null, react_1["default"].createElement("div", {
+      onClick: handleToggleEdit
+    }, react_1["default"].createElement("span", null, task.title)), react_1["default"].createElement("button", {
+      className: "btn is-delete",
+      onClick: function onClick() {
+        return deleteTask.mutate(task.id);
+      }
+    }, "\u524A\u9664"));
+  };
+
   return react_1["default"].createElement("li", {
     className: task.is_done ? 'done' : '',
     key: task.id
@@ -2820,9 +3083,7 @@ var TaskItem = function TaskItem(_ref) {
     onClick: function onClick() {
       return updateDoneTask.mutate(task);
     }
-  })), react_1["default"].createElement("div", null, react_1["default"].createElement("span", null, task.title)), react_1["default"].createElement("button", {
-    className: "btn is-delete"
-  }, "\u524A\u9664"));
+  })), editTitle === undefined ? itemText() : itemInput());
 };
 
 exports["default"] = TaskItem;
@@ -3018,7 +3279,7 @@ var __importStar = this && this.__importStar || function (mod) {
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports.useUpdateDoneTask = exports.useTasks = void 0;
+exports.useDeleteTask = exports.useUpdateTask = exports.useCreateTask = exports.useUpdateDoneTask = exports.useTasks = void 0;
 
 var api = __importStar(__webpack_require__(/*! ../api/taskApi */ "./resources/ts/api/taskApi.ts"));
 
@@ -3047,6 +3308,71 @@ var useUpdateDoneTask = function useUpdateDoneTask() {
 };
 
 exports.useUpdateDoneTask = useUpdateDoneTask;
+
+var useCreateTask = function useCreateTask() {
+  var QueryClient = (0, react_query_1.useQueryClient)();
+  return (0, react_query_1.useMutation)(api.createTask, {
+    onSuccess: function onSuccess() {
+      QueryClient.invalidateQueries('tasks');
+      react_toastify_1.toast.success('登録に成功しました！');
+    },
+    onError: function onError(error) {
+      var response = error.response;
+
+      if (response.data.errors) {
+        Object.values(response.data.errors).map(function (messages) {
+          messages.map(function (message) {
+            react_toastify_1.toast.error(message);
+          });
+        });
+      } else {
+        react_toastify_1.toast.error('登録に失敗しました');
+      }
+    }
+  });
+};
+
+exports.useCreateTask = useCreateTask;
+
+var useUpdateTask = function useUpdateTask() {
+  var QueryClient = (0, react_query_1.useQueryClient)();
+  return (0, react_query_1.useMutation)(api.updateTask, {
+    onSuccess: function onSuccess() {
+      QueryClient.invalidateQueries('tasks');
+      react_toastify_1.toast.success('更新に成功しました！');
+    },
+    onError: function onError(error) {
+      var response = error.response;
+
+      if (response.data.errors) {
+        Object.values(response.data.errors).map(function (messages) {
+          messages.map(function (message) {
+            react_toastify_1.toast.error(message);
+          });
+        });
+      } else {
+        react_toastify_1.toast.error('登録に失敗しました');
+      }
+    }
+  });
+};
+
+exports.useUpdateTask = useUpdateTask;
+
+var useDeleteTask = function useDeleteTask() {
+  var QueryClient = (0, react_query_1.useQueryClient)();
+  return (0, react_query_1.useMutation)(api.deleteTask, {
+    onSuccess: function onSuccess() {
+      QueryClient.invalidateQueries('tasks');
+      react_toastify_1.toast.success('削除に成功しました！');
+    },
+    onError: function onError() {
+      react_toastify_1.toast.error('削除に失敗しました');
+    }
+  });
+};
+
+exports.useDeleteTask = useDeleteTask;
 
 /***/ }),
 
